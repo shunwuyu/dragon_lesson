@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面向对象的世界</title>
+</head>
+<body>
+    <script>
+    // 了解夏总？
+    // 需求开发出来? 
+    // 自然语言 代码的映射  情商编程码商
+    // JS 是强大表现力的语言, [] 
+    // {} JSON 对象字面量
+    // Object
+    const xh = {
+        // string
+        company: undefined, // 未定义
+        girlfriend: null,
+        name: '夏宏',
+        // Number 
+        age: 21,
+        school: '东华理工大学',
+        hometown: '鹰潭',
+        // boolean
+        isSingle: true,
+        // 函数也是对象
+        eating: function() {
+            console.log('干饭干饭')
+        },
+        // 形参
+        sendFlower: function(target) {
+            target.receiveFlower(this);
+        } 
+    }
+
+    const xm = {
+        name: '小美',
+        xq: 50,
+        receiveFlower: function(sender) {
+            // console.log(this.name + '收到了' + sender.name + '送出的花');
+            // 代码可读性
+            console.log(`${this.name}收到了${sender.name}送出的花`)
+            if (this.xq >= 90) {
+                console.log("万达走一波");
+            } else {
+                console.log("不约,我们不约");
+            }
+        }
+    }
+    // 实参
+    // xh.sendFlower(xm);
+    // 比较复杂
+    // proxy 代理对象 
+    xl = {
+        name: '小丽',
+        hometown: '鹰潭',
+        receiveFlower: function(sender) {
+            // 代替小美收花 实现同样的方法, 也就是接口
+            // if(sender.name == '夏宏') {
+            //     console.log('夏哥,让我们在一起吧....')
+            // }
+            if (xm.xq < 90) {
+                console.log('等一等')
+                setTimeout(function() {
+                    xm.xq = 91;
+                    xm.receiveFlower(sender);
+                }, 2000)
+            } else {
+                xm.receiveFlower(sender);
+            }
+        }
+    }
+    // 当xl 也具有和xm 一样的receiveFlower方法, xl 就可以
+    // 代替xm 收花, proxy 代理模式 
+    // receiveFlower 也叫接口  面向接口编程
+    // xh.sendFlower(xl);
+    xh.sendFlower(xm);
+
+
+    </script>
+</body>
+</html>

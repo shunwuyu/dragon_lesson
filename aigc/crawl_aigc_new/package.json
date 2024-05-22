@@ -1,0 +1,17 @@
+{
+  "name": "crawl_aigc_new",
+  "version": "1.0.0",
+  "description": "- 为何要编程？\r     需求\r     后端  \r     技术栈 node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "openai": "^4.47.1",
+    "request-promise": "^4.2.6"
+  }
+}
