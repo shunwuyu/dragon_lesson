@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写debounce</title>
+</head>
+<body>
+<script>
+// 防抖功能函数 为了性能优化 1/60 （屏幕刷新率） 卡顿
+// func  是真正要执行的处理函数， this, args 权利
+// wait  定时器  id  clear， 最后一次
+// immediate 立即执行一次   
+function debounce(func, wait, immediate) {
+    // 自由变量空间
+    var timeout, result 
+    // 真正执行的函数
+    return function() {
+        // 二传手
+        var context = this
+        var args = arguments
+
+        if (timeout) clearTimeout(timeout);
+        if (immediate) {
+            var callNow = !timeout;
+            timeout = setTimeout(function() {
+                timeout = null;
+            }, wait)
+            if (callNow) result = func.apply(context, args)
+        } else {
+            timeout = setTimeout(function() {
+                result = func.apply(context, args)
+            }, wait)
+        }
+        return result 
+    }
+}
+debounce(getUserAction, 1000,true)
+</script>
+</body>
+</html>
