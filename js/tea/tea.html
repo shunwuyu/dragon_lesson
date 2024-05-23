@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板方法模式</title>
+</head>
+<body>
+<script>
+// 茶类 首字母大写 ，es5 
+// js 变量类型是由值来决定的
+// js 除了简单数据类型，就是对象(函数是可执行的对象)
+// js 早期没有class 关键字
+// js 普通函数，
+// 大写就是·构造函数
+// 其实JS里面没有类 早期没有提供class
+// Tea 和绿茶之间没有血缘关系，Tea 是原型对象， 
+// Tea 是可执行对象，构建我们的对象 this指向的这些属性就是实例的属性模板
+// Tea 通过prototype 添加一些方法 ，都可以以它为原型的对象共享（public） 
+function Tea(type) {
+    this.type = type
+    console.log('您准备泡一杯' + this.type);
+}
+// 对象 prototype 添加方法
+Tea.prototype.boilWater = function() {
+    console.log('把水煮沸')
+}
+Tea.prototype.steepTeaBag = function() {
+    console.log('用沸水浸泡茶叶')
+}
+Tea.prototype.pourInCup = function() {
+    console.log('把茶水倒进杯子')
+}
+Tea.prototype.addLemon = function() {
+    console.log('加柠檬')
+}
+// 接口， 模板方法接口，
+Tea.prototype.init = function() {
+    this.boilWater();
+    this.steepTeaBag();
+    this.pourInCup();
+    this.addLemon();
+}
+
+// 当以new 的方式被运行 
+// var greenTea = new Tea('绿茶');
+// var wlTea = new Tea('乌龙茶');
+var lemonTea = new Tea('柠檬茶');
+lemonTea.init();
+</script>  
+</body>
+</html>

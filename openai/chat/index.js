@@ -5,7 +5,7 @@ const OpenAI = require('openai');
 // 实例化 OpenAI 配置
 const client = new OpenAI({
     // 凭证 密钥  算力收费  token
-    apiKey: 'sk-r4N8AJ6qidnIWrkqsilwlUMekVpKhoVJ3VEaz8Ss0LUUi7bH',
+    apiKey: '****',
     baseURL: 'https://api.chatanywhere.tech/v1'
 })
 // 入口主函数 
