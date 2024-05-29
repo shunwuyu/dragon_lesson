@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅梦友友</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row col-md-6 col-md-offset-3">
+            <h1>AI能力驱动的userData</h1>
+            <table class="table table-striped" id="user_table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>家乡</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td>1</td>
+                        <td>代童</td>
+                        <td>赣州</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>罗昭发</td>
+                        <td>赣州</td>
+                    </tr> -->
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row col-md-6 col-md-offset-3">
+            <form name="aiForm" method="get" action="http://www.baidu.com">
+                <div class="form-group">
+                  <label for="questionInput">向AI助理提问：</label>
+                  <input type="text" 
+                  name="question"
+                  class="form-control" id="questionInput"
+                   placeholder="请输入您想问的users相关问题">
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
+        </div>
+        <div class="row" id="message">
+        </div>
+    </div>
+    <script>
+    const oMessage = document.querySelector('#message')
+    const oBody = document.querySelector('#user_table tbody')
+    const oForm = document.forms['aiForm'];
+    let usersData = [];
+    fetch('http://localhost:3000/users')
+        .then(data => data.json())
+        .then(users => {
+            usersData = users;
+            // console.log(usersData);
+            // console.log(users);
+            oBody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.hometown}</td>
+                </tr>
+            `).join('')
+        })
+
+    oForm.addEventListener('submit', function(event) {
+        // 组织表单的默认行为
+        event.preventDefault();
+        // name 属性去找  性能更好 
+        const question = this["question"].value.trim();
+        // console.log(question);
+        fetch(`http://localhost:8888/users?question=${question}&users=${JSON.stringify(usersData)}`)
+            .then(data => data.json())
+            .then(res => {
+                // console.log(res)
+                document.querySelector('#message').innerHTML = res.message
+            })
+    })
+    </script>
+</body>
+</html>

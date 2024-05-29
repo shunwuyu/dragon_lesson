@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信WEUI源码分析</title>
+    <style>
+    /* css reset  默认样式重置，对所有浏览器都公平
+        IE(edge前身) 很多坏事 
+    */
+    * {
+        margin: 0;
+        padding: 0;
+        outline: 0; /*轮廓 不同的浏览器不一样*/
+    }
+    /* css inherit 继承 */
+    body, html {
+        height: 100%;
+        /* 按上去的高亮颜色  透明*/
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        /*为苹果用户优化 支持苹果特殊字体*/
+        font-family: system-ui,-apple-system, sans-serif;
+
+    }
+    .page, body {
+        background-color: #ededed;
+    }
+
+    .page {
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       overflow-y: auto;/*page 一屏高度，用滚动条*/
+       -webkit-overflow-scrolling: touch;/*滚动如丝般顺滑*/
+       overflow-scrolling: touch;
+    }
+    .page__hd {
+        padding: 40px;
+    }
+    .page__title {
+        text-align: left;
+        font-size: 20px; /*16*/
+        margin-bottom: 15px;
+        font-weight: 400;
+    }
+    .page__desc {
+        margin-top: 4px;
+        text-align: left;
+        font-size: 14px;
+        color:rgba(0,0,0,0.55);
+    }
+
+    .button-sp-area {
+        /*顺时针*/
+        margin: 15px auto;
+        padding: 15px;
+        text-align: center;
+    }
+    /*weui 基类 css编程的OOP 项目前缀  .tb .tm 通用.page?  .dy */
+    .weui-btn {
+        display: block; /*inline -> block */
+        width: 184px;
+        margin: 0 auto;
+        padding: 12px 24px;
+        font-weight: 500;
+        font-size: 17px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        line-height: 1.4118;
+        border-radius: 8px;
+        /*webkit 代表android chrome， apple等内核 
+            user-select 是比较新的属性，
+            实验属性 -webkit-user-select 支持 有的新手机上能运行 
+        */
+        -webkit-user-select:none;
+        user-select:none;/* 防止长按 select 用户会误解*/
+        /* margin-bottom: 16px; */
+
+    }
+    /*多态 */
+    .weui-btn_primary {
+        background-color: #07c160;
+    }
+    .weui-btn_default {
+        color: rgba(0,0,0,0.9);
+        background-color: rgba(0,0,0,0.5);
+    }
+    .weui-btn_warn {
+        background-color: #fa5151;
+    }
+    /*css高级选择器  兄弟选择器*/
+    .weui-btn+.weui-btn {
+        margin-top: 16px;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <div class="page__title">
+            Button
+            </div>
+            <p class="page__desc">
+            按钮
+            </p>
+        </div>
+        <div class="page__bd">
+            <div class="button-sp-area">
+                <a href="#" class="weui-btn weui-btn_primary">主要操作</a>
+                <a href="#" class="weui-btn weui-btn_default">次要操作</a>
+                <a href="#" class="weui-btn weui-btn_warn">警告</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
