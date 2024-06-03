@@ -34,6 +34,34 @@
 
         </div>
         <div class="row col-md-6 col-md-offset-3">
+            <form name="userForm">
+                <div class="form-group">
+                    <label for="idInput">ID:</label>
+                    <input type="text" 
+                    name="userid"
+                    class="form-control" id="idInput"
+                    placeholder="请输入用户ID" >
+                </div>
+                <div class="form-group">
+                    <label for="nameInput">姓名:</label>
+                    <input type="text" 
+                    name="username"
+                    class="form-control" id="nameInput"
+                    placeholder="请输入用户姓名" >
+                </div>
+                <div class="form-group">
+                    <label for="townInput">家乡:</label>
+                    <input type="text" 
+                    name="userhome"
+                    class="form-control" id="townInput"
+                    placeholder="请输入家乡" >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-default">提交</button>
+                </div>
+            </form>
+        </div>
+        <div class="row col-md-6 col-md-offset-3">
             <form name="aiForm" method="get" action="http://www.baidu.com">
                 <div class="form-group">
                   <label for="questionInput">向AI助理提问：</label>
@@ -52,6 +80,7 @@
     const oMessage = document.querySelector('#message')
     const oBody = document.querySelector('#user_table tbody')
     const oForm = document.forms['aiForm'];
+    const oUserForm = document.forms['userForm']
     let usersData = [];
     fetch('http://localhost:3000/users')
         .then(data => data.json())
@@ -80,6 +109,33 @@
                 // console.log(res)
                 document.querySelector('#message').innerHTML = res.message
             })
+    })
+    oUserForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const user = {
+            id:'',
+            name:'',
+            hometown:''
+        }
+        const strId = this['userid'].value.trim();
+        const strName = this['username'].value.trim();
+        const strHome = this['userhome'].value.trim();
+        // console.log(strId, strName, strHome)
+        user.id = strId;
+        user.name = strName;
+        user.hometown = strHome;
+        // console.log(user)
+        fetch('http://localhost:3000/users', {
+            method:'post',
+            headers: {
+                'content-type':"applicaiton/json"
+            },
+            body: JSON.stringify(user)
+        })
+        .then(data => data.json())
+        .then(data => {
+            console.log(data);
+        })
     })
     </script>
 </body>
