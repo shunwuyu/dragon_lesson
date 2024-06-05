@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+let template = '我是{{name}}, 年龄{{age}}, 性别{{sex}}'
+let person = {
+    name: '龙哥',
+    age: 18,
+    sex: '猛男'
+}
+// 字符串编程题， replace 
+// 怎么找到{{}} 正则表达示  [] {} 
+function renderTemplate(template, data) {
+    // js RegExp
+    // 数学符号  匹配模式
+    // \w 匹配字符 a-zA-Z0-1  word
+    // + 一个或多个 name  age  sex 
+    // () 小分组
+    const reg = /\{\{(\w+)\}\}/
+    // console.log(reg.test(template))
+    if (reg.test(template)) {
+        // console.log(reg.exec(template))
+        const name = reg.exec(template)[1];
+        // 高级功能 
+        template = template.replace(reg, data[name]);
+        console.log(template)
+        return renderTemplate(template, data)
+    }
+    return template
+    // console.log(Object.prototype.toString.call(reg))
+}
+renderTemplate(template, person)
+</script>
+</body>
+</html>

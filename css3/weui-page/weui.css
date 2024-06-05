@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 1px solid #f00;
+}
+:root {
+  --weui-BG-0: #ededed;
+}
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+body,
+html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+page,
+body {
+  background-color: var(--weui-BG-0);
+}
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

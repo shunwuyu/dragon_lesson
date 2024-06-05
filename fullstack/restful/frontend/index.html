@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    function getAjaxUserData() {
+        return new Promise((resolve, reject) => {
+            fetch('http://localhost:3000/users')
+                .then(data => data.json())
+                .then(data => {
+                    resolve(data)
+                })
+        })
+    }
+    
+    (async function() {
+        const users = await getAjaxUserData();
+        console.log(users);
+
+        fetch('http://localhost:3000/users', {
+            method: 'post',
+            body: JSON.stringify({
+                id:"7",
+                name: "喻大米",
+                hometown: "南昌"
+            })
+        })
+    })()
+    </script>
+</body>
+</html>

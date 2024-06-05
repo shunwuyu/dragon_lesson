@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖拽式文件上传</title>
+    <style>
+        /* 100 优先级是 */
+    #drop-area {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.2em; 
+        cursor: pointer;
+    }
+    .preview {
+        margin-top: 20px;
+        max-width:200px;
+    }
+    /* 标签1分 类名10分 id  100分 !important 永远最大 */
+    /*优先级是10分*/
+    #drop-area.highlight {
+        border-color:#007bff;
+    }
+    </style>
+</head>
+<body>
+    <div id="drop-area">
+        <div>拖拽图片到这里,或<em>点击选择文件</em></div>
+        <input type="file" id="file-input" accept="image/*"/>
+    </div>
+    <div class="preview" id="preview"></div>
+    <script>
+    // html5 拖拽，非常友好且实用的用户体验
+    // ipad ? 小孩子都不用学就会用
+    const oDropArea = document.querySelector('#drop-area');
+    oDropArea.addEventListener('dragenter', dragEnter);
+    oDropArea.addEventListener('dragleave', dragLeave);
+    oDropArea.addEventListener('dragover', dragOver);
+    oDropArea.addEventListener('drop', drop);
+    const fileInput = document.getElementById('file-input')
+
+    fileInput.addEventListener('change', function(event) {
+        uploadFile(event.target.files);
+    })
+
+    function dragEnter(event) {
+        event.preventDefault();
+        this.classList.add('highlight')
+    }
+    function dragLeave(event) {
+        this.classList.remove('highlight')
+    }
+    function dragOver(event) {
+        event.preventDefault();
+        this.className = 'highlight'
+    }
+    function drop(event) {
+        // drop 文件，默认就是新窗口打开
+        event.preventDefault();
+        // console.log('----')
+        
+        uploadFile(event.dataTransfer.files);
+    }
+    // 
+    function uploadFile(files) {
+        // console.log(files);
+        console.log('开始上传文件');
+        const file = files[0];
+        // console.log(file, Object.prototype.toString.call(file))
+        if (!file.type.startsWith('image/')) {
+            console.log('请上传图片')
+            return;
+        }
+        // 不通过表单，用JS来提交数据
+        const formData = new FormData()
+        formData.append('image', file)
+
+        // ajax 请求
+        fetch('http://127.0.0.1:3000/upload', {
+            method: 'POST',
+            body: formData
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+        // 上传图片？ 怎么做？ 
+    }
+    </script>
+</body>
+</html>
