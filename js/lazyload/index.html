@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        background-color: gray;
+    }
+    img {
+        display: block;
+        margin-bottom: 50px;
+        width: 400px;
+        height: 400px;
+    }
+    </style>
+</head>
+<body>
+    <!-- 数据属性 data-src 手动的触发下载 权力拿到手上来 -->
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/hsossms/20240612/v2_8ec7812750194dbd831babce8806c626@000000_oswg5522709oswg1792oswg1024_img_png?x-oss-process=image/resize,m_mfit,w_600,h_400,limit_0/crop,w_600,h_400,g_center/format,webp" />
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190808/v2_1565254363234_img_jpg">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190905/v2_1567641293753_img_png">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png"  data-src="https://img.36krcdn.com/20190905/v2_1567640518658_img_png">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png"  data-src="https://img.36krcdn.com/20190905/v2_1567642423719_img_000">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png"  data-src="https://img.36krcdn.com/20190905/v2_1567642425030_img_000">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190905/v2_1567642425101_img_000">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png"data-src="https://img.36krcdn.com/20190905/v2_1567642425061_img_000">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190904/v2_1567591358070_img_jpg">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190905/v2_1567641974410_img_000">
+    <img src="https://misc.360buyimg.com/mtd/pc/common/img/blank.png" data-src="https://img.36krcdn.com/20190905/v2_1567641974454_img_000">
+    <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script>
+    const imgs = document.getElementsByTagName('img');
+    const num = imgs.length;
+    // console.log(imgs);
+    // 注册在scroll 事件上的处理函数
+    const throttleLayLoad = _.throttle(lazyload, 200)
+
+    window.addEventListener('scroll', throttleLayLoad);
+    let n = 0
+    document.addEventListener('DOMContentLoaded', () => {
+        lazyload()
+    })
+    window.addEventListener('load', () => {
+        console.log('load')
+    })
+    // 不要去重复造轮子
+    // function throttle(func, limit) {  
+    //     let inThrottle;  
+    //     return function() {  
+    //         const context = this;  
+    //         const args = arguments;  
+    //         if (!inThrottle) {  
+    //         func.apply(context, args);  
+    //         inThrottle = true;  
+    //         setTimeout(() => inThrottle = false, limit);  
+    //         }  
+    //     };  
+    // } 
+    
+    // 延迟加载图片的功能
+    function lazyload(event) {
+        // 一屏的高度·
+        let screenHeight = document.documentElement.clientHeight;
+        // 滚动条滚动的距离 多浏览器适配
+        // IE 做死
+        let scrollTop = document.documentElement.scrollTop || 
+            document.body.scrollTop
+        console.log(scrollTop)
+        // 图片在不在可视区域里的呢？
+        // console.log(screenHeight);
+        for (let i = n; i < num; i++) {
+            if(imgs[i].offsetTop < screenHeight + scrollTop) {
+                // 主动触发下载
+                imgs[i].src = imgs[i].getAttribute('data-src');
+                n = i + 1 // 有多少张图片加载了
+                if (n === num) {
+                    // console.log('所有图片都加载完成了');
+                    window.removeEventListener('scroll', throttleLayLoad)
+                }
+            }
+        }
+
+    }
+
+    </script>
+</body>
+</html>

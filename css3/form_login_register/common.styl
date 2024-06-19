@@ -1,0 +1,62 @@
+*
+    margin 0
+    padding 0
+
+.auth
+    overflow hidden
+    width 320px
+    background #f0f0f0
+    .auth-title
+        display flex
+        position relative
+        border-bottom 1px solid #eee
+        height 40px
+        label
+            flex 1
+            height 100%
+            cursor pointer
+            display flex
+            align-items center
+            justify-content center
+        em
+            position absolute
+            left 0
+            bottom 0
+            width 50% 
+            border-radius 1px
+            height 2px
+            background-color #f66
+            transition all .3s ease-in-out
+    .auth-form
+        display flex
+        width 200%
+        height 250px
+        transition all .3s ease-in-out
+        form
+            flex 1
+            padding 20px
+        div
+            display flex
+            flex-direction column-reverse
+            & + div
+                margin-top 10px
+
+#register-btn:checked
+    & ~ .auth-title
+        label:nth-child(2)
+            color #f66
+            font-weight bold
+        em
+            transform translateX(160px)
+    & ~ .auth-form
+        transform translateX(-50%)
+
+#login-btn:checked
+    & ~ .auth-title
+        label:nth-child(1)
+            font-weight bold
+            color #f66
+        em
+            transform translateX(0)
+    & ~ .auth-form
+        transform translateX(0)

@@ -1,0 +1,9 @@
+image {
+  display: block;
+  width: 100%;
+}
+/* page == body */
+page {
+  line-height: 1.5;
+  font-size: 32rpx;
+}

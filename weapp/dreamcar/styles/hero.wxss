@@ -1,0 +1,27 @@
+.hero{}
+.hero image {
+  height: 38.2vh;
+}
+.hero.white {
+  background: #fff;
+}
+.hero .header {
+  font-size: 72rpx;
+}
+.hero .sub-header {
+  font-size: 32rpx;
+  text-transform: uppercase;
+  letter-spacing: 6rpx;
+  margin-bottom: 16rpx;
+  color: rgba(0,0,0,0.85);
+}
+.hero .description {
+  padding:0 12%;
+  margin-bottom: 64rpx;
+}
+.hero .content {
+  padding-top: 10%;
+}
+.hero .content.centered {
+  text-align: center;
+}
