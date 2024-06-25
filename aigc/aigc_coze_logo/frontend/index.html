@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coze 生成</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    #result img {
+        width: 120px;
+        height: 120px;
+    }
+    </style>
+</head>
+<body>
+    <!-- 布局 -->
+    <div class="container">
+        <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form name="logoForm">
+                        <div class="form-group">
+                            <label for="titleInput">Bot名称:</label>
+                            <input type="text" id="titleInput" 
+                            name="title"
+                            class="form-control"
+                            placeholder="请输入名称"
+                            required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="descInput">Bot功能介绍:</label>
+                            <textarea name="desc" class="form-control" 
+                            row="3"
+                            id="descInput">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <button 
+                            name="loginButton"
+                            type="primary" 
+                            class="btn btn-primary">生成LOGO</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6" id="result">
+
+                </div>
+        </div>
+    </div>
+    <script>
+    // forms 是所有表单的集合， 可以按名字来获取
+    const oFrom = document.forms["logoForm"]
+    oFrom.addEventListener('submit', function(event) {
+        event.preventDefault() // 阻止默认提交
+        const title = this["title"].value.trim()
+        if (!title) return // html5 有的不支持， 两套方案
+        const btn = this["loginButton"];
+        btn.disabled = true
+        const desc = this["desc"].value.trim()
+        // console.log(title);
+
+        // HTTP 协议
+        // 请求行 localhost:3000/logo   POST
+        //  请求头 
+        // 请求体 title  desc 
+        // 前后端数据交付的数据格式是json
+        // 输出是二进制或字符串
+        // es6 key value 一样的， 可以省略 
+        let data = {
+            title,
+            desc
+        }
+        console.log(JSON.stringify(data))
+        fetch('http://localhost:3000/logo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        // 响应 json 
+        .then(res => res.json())
+        .then(data => {
+            btn.disabled = false
+            console.log(data);
+            if (data.status == 200) {
+                let url = data.url;
+                document.getElementById('result').innerHTML += 
+                    `<img src="${url}" alt="">`
+            }
+        })
+    })
+
+    </script>
+</body>
+</html>

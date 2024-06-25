@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>就地编辑</title>
+</head>
+<body>
+    <div id="signature"></div>
+    <script src="./edit_in_place.js"></script>
+    <script>
+    // 封装能力  函数， 类 ，复用，  
+    // js是单线程的 赶快把 同步任务执行完
+    // 碰到耗时性的任务， 先放入 event loop
+    // setTimeout 事件监听  耗时性的任务(fetch) 查数据库
+    const STORAGEKEY = 'signature'
+
+    fetch("http://localhost:3000/users/1")
+        .then(res => res.json())
+        .then(data => {
+            // console.log(data, '//////')
+            // console.log('1111')
+            const { signature } = data
+            const stoSignature = localStorage.getItem(STORAGEKEY) 
+            if (signature !== stoSignature) {
+                localStorage.setItem(STORAGEKEY, signature)
+            }
+            new EditInPlace(STORAGEKEY, 
+                document.getElementById('signature'), signature)
+        })
+
+    
+    // 
+    // 
+    //     || "这个家伙很懒，什么都没有留下";
+
+    // console.log(signature)
+    // 
+    </script>
+</body>
+</html>
